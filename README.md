@@ -1,4 +1,4 @@
-# Multi-Lingual Press Commentary / Movie Subtitler
+# Group 2: Multi-Lingual Press Commentary / Movie Subtitler
 
 ## Project Overview
 
