@@ -1,10 +1,15 @@
-[dnscrypt-proxy-win64-2.1.18.zip](https://github.com/user-attachments/files/32341826/dnscrypt-proxy-win64-2.1.18.zip)# Group 2: Multi-Lingual Press Commentary / Movie Subtitler
+## Group 2: Multi-Lingual Press Commentary / Movie Subtitler
 
 ## Project Overview
 
 The Multi-Lingual Press Commentary / Movie Subtitler is an AI-powered application designed to automatically generate subtitles for Nigerian press news videos and indigenous movies. The system leverages Automatic Speech Recognition (ASR), Large Language Models (LLMs), and Machine Translation to produce accurate, readable, and multilingual subtitles.
 
 This project was developed as part of the NCAIR AI Training Programme.
+
+---
+
+## Project Demo
+https://github.com/user-attachments/assets/f5cb33ae-247a-423c-b254-e11edab3b546
 
 ---
 
@@ -58,6 +63,51 @@ This project was developed as part of the NCAIR AI Training Programme.
 
 ---
 
+Video Input
+    │
+    ▼
+Language Identification
+    │
+    ▼
+User confirms source language + picks target language
+    │
+    ▼
+Stage 1 — Transcription
+    NCAIR ASR model (Hausa / Yoruba / Igbo / Nigerian English)
+    → chunked inference (30s windows, 2s overlap)
+    → word-level merge & de-duplication
+    → subtitle block segmentation (duration/pause/word-count/punctuation)
+    → raw .srt
+    │
+    ▼
+Stage 2 — Cleanup (N-ATLaS GGUF, llama.cpp, batched w/ retry+validation)
+    Spelling/punctuation/ASR-error correction only, no rewriting
+    → cleaned .srt
+    │
+    ▼
+Stage 3 — Translation (N-ATLaS GGUF, llama.cpp, batched w/ retry+validation)
+    Dynamic source→target prompt (any of the 4 langs + English)
+    → bilingual .srt (original line + translated line)
+    │
+    ▼
+Burn-in (ffmpeg subtitles filter, resolution-scaled font)
+    → final captioned .mp4
+    │
+    ▼
+(Optional) Real-time Web App — FastAPI backend + vanilla HTML/JS frontend,
+tunneled via ngrok for a public Colab-hosted URL
+
+---
+
+## Real-time feature
+Audio is processed in short rolling chunks instead of one full pass.
+Each chunk goes straight from ASR to subtitle — no N-ATLaS cleanup or translation (too slow for live use).
+Same rules decide subtitle breaks (pause length, word count, punctuation), just applied chunk-by-chunk as words come in.
+Video plays instantly from the browser; captions stream in and overlay as they're ready.
+Basically: batch mode = accurate but slow (ASR + cleanup + translation), real-time mode = fast but raw (ASR only).
+
+---
+
 ## Repository Structure
 
 Multi-Lingual-Press-Commentary-Subtitler/
@@ -66,6 +116,7 @@ Multi-Lingual-Press-Commentary-Subtitler/
 ├── LICENSE
 ├── .gitignore
 └── Multi_Lingual_Subtitler.ipynb
+
 
 ## Installation
 
@@ -86,7 +137,6 @@ Or install the required packages manually:
 ```bash
 pip install transformers accelerate librosa soundfile pysrt ipywidgets hf_transfer llama-cpp-python
 ```
-
 ---
 
 ## Usage
@@ -120,9 +170,6 @@ The application produces:
 - Desktop application packaging.
 - GPU optimization for faster inference.
 
-## Project Demo
-https://github.com/user-attachments/assets/f5cb33ae-247a-423c-b254-e11edab3b546
-
 ---
 
 ## Acknowledgements
@@ -133,16 +180,22 @@ We sincerely acknowledge:
 - **Our Facilitators** for their mentorship, technical support, and continuous guidance throughout the project.
 - **All members of our project group** for their collaboration, dedication, and contributions toward the successful completion of this project.
 
----
-
 ## Group Members
 - Daniel Ottah
 - Titlayoomi Kehinde
 - Nzubechukwu Illo
-- Umar Farouq
+- Umar Ibrahim 
 - Isaac Famiyesin
 - Imran Ibrahim
 - Chiedozie Chimah
+- David Olaniyi
+  
+---
+
+## Facilitators
+- Victor Rizama
+- Stephen Ayuba
+
 ---
 
 ## License
